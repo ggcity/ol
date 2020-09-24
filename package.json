@@ -1,0 +1,26 @@
+{
+  "name": "@ggcity/ol",
+  "version": "0.1.0",
+  "description": "OpenLayers Web Component",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ggcity/ol.git"
+  },
+  "author": "Rachot Moragraan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ggcity/ol/issues"
+  },
+  "homepage": "https://github.com/ggcity/ol#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  },
+  "dependencies": {
+    "ol": "^6.4.3"
+  }
+}
