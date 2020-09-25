@@ -4,14 +4,29 @@
     <meta charset="utf-8">
     <title>ol-map demo</title>
     <style>
-      ol-map {
-        width: 400px;
-        height: 250px;
+      html, body, ol-map {
+        width: 100%;
+        height: 100%;
+      }
+
+      body {
+        padding: 0;
+        margin: 0;
       }
     </style>
   </head>
   <body>
-    <ol-map></ol-map>
+    <ol-map
+      latitude="33.778724"
+      longitude="-117.960058"
+      zoom="14"
+      projection="EPSG:4326"
+      min-zoom="11"
+      max-zoom="19"
+      attribution-prefix="City of Garden Grove"
+    >
+      <ol-mapbox-style></ol-mapbox-style>
+    </ol-map>
     <script src="./index.js"></script>
   </body>
 </html>

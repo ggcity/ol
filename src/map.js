@@ -1,8 +1,4 @@
 import { Map, View } from 'ol';
-import TileLayer from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
-
-import { olCss } from 'ol/ol.css';
 
 let template = document.createElement('template');
 
@@ -31,21 +27,81 @@ customElements.define('ol-map', class extends HTMLElement {
   }
 
   connectedCallback() {
-    const map = new Map({
-      target: this.map,
-      layers: [
-        new TileLayer({
-          source: new OSM()
-        })
-      ],
-      view: new View({
-        center: [0, 0],
-        zoom: 0
-      })
+    this.view = new View({
+      center: [this.longitude, this.latitude],
+      zoom: this.zoom,
+      projection: this.projection,
+      minZoom: this.minZoom,
+      maxZoom: this.maxZoom,
+      constrainResolution: true
     });
+
+    this.map = new Map({
+      target: this.shadowRoot.querySelector('#map'),
+      view: this.view
+    });
+
+    this.view.on('change', this._viewChanged.bind(this));
+    this._syncAttributeToMap = true;
   }
 
-  get map() {
-    return this.shadowRoot.querySelector('#map');
+  _viewChanged(e) {
+    this._syncAttributeToMap = false;
+    this.longitude = this.view.getCenter()[0];
+    this.latitude = this.view.getCenter()[1];
+    this.zoom = this.view.getZoom();
+    this._syncAttributeToMap = true;
+  }
+
+  static get observedAttributes() {
+    return [
+      'latitude', 'longitude', 'zoom'
+    ];
+  }
+
+  attributeChangedCallback(attrName, oldVal, newVal) {
+    if (this._syncAttributeToMap) {
+      if (attrName === 'latitude' || attrName === 'longitude') {
+        this.view.setCenter([this.longitude, this.latitude]);
+      } else if (attrName === 'zoom') {
+        this.view.setZoom(this.zoom);
+      }
+    }
+  }
+
+  get latitude() {
+    return this.getAttribute('latitude');
+  }
+
+  set latitude(newValue) {
+    this.setAttribute('latitude', newValue);
+  }
+
+  get longitude() {
+    return this.getAttribute('longitude');
+  }
+
+  set longitude(newValue) {
+    this.setAttribute('longitude', newValue);
+  }
+
+  get zoom() {
+    return parseFloat(this.getAttribute('zoom')) ||  0;
+  }
+
+  set zoom(newValue) {
+    this.setAttribute('zoom', newValue);
+  }
+
+  get minZoom() {
+    return parseFloat(this.getAttribute('min-zoom'));
+  }
+
+  get maxZoom() {
+    return parseFloat(this.getAttribute('max-zoom'));
+  }
+
+  get projection() {
+    return this.getAttribute('projection') || 'EPSG:3857';
   }
 });
