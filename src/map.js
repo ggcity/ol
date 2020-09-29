@@ -1,10 +1,12 @@
 import { Map, View } from 'ol';
+import { fromLonLat } from 'ol/proj';
 
 let template = document.createElement('template');
 
 template.innerHTML = /*html*/`
   <style>
     @import 'https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/css/ol.css';
+    @import 'https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css';
 
     :host {
       display: block;
@@ -28,7 +30,7 @@ customElements.define('ol-map', class extends HTMLElement {
 
   connectedCallback() {
     this.view = new View({
-      center: [this.longitude, this.latitude],
+      center: fromLonLat([this.longitude, this.latitude]),
       zoom: this.zoom,
       projection: this.projection,
       minZoom: this.minZoom,
@@ -94,11 +96,11 @@ customElements.define('ol-map', class extends HTMLElement {
   }
 
   get minZoom() {
-    return parseFloat(this.getAttribute('min-zoom'));
+    return parseFloat(this.getAttribute('min-zoom')) || null;
   }
 
   get maxZoom() {
-    return parseFloat(this.getAttribute('max-zoom'));
+    return parseFloat(this.getAttribute('max-zoom')) || null;
   }
 
   get projection() {

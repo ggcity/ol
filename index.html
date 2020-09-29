@@ -14,18 +14,21 @@
         margin: 0;
       }
     </style>
+    <script src="https://unpkg.com/mapbox-gl@1.11.1/dist/mapbox-gl.js"></script>
   </head>
   <body>
     <ol-map
       latitude="33.778724"
       longitude="-117.960058"
       zoom="14"
-      projection="EPSG:4326"
-      min-zoom="11"
-      max-zoom="19"
+      max-zoom="22"
       attribution-prefix="City of Garden Grove"
     >
       <ol-mapbox-style></ol-mapbox-style>
+      <ol-vector-tile 
+        min-zoom="16"
+      >
+      </ol-vector-tile>
     </ol-map>
     <script src="./index.js"></script>
   </body>
