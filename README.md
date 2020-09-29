@@ -23,6 +23,13 @@ We're using Parcel to bundle up this web component
 ></ol-map>
 ```
 
+Test Run
+--------
+
+    $ npm start
+
+Go to http://localhost:1234 on your browswer.
+
 Maintainers
 -----------
 
