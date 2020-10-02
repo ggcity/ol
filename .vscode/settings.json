@@ -1,0 +1,8 @@
+{
+    "solargraph.useBundler": true,
+    "editor.tabSize": 2,
+    "emmet.excludeLanguages": [
+        "haml",
+        "markdown"
+    ]
+}

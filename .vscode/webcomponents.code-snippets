@@ -1,0 +1,30 @@
+{
+	"Getter/Setter (HTML Attribute)": {
+		"scope": "javascript",
+		"prefix": "getattr",
+		"body": [
+			"get $1() {",
+			"\treturn this.getAttribute('$2');",
+			"}",
+			"",
+			"set $1(newValue) {",
+			"\tthis.setAttribute('$2', newValue);",
+			"}"
+		],
+		"description": "Getter / Setter for HTML attribute"
+	},
+	"Getter/Setter (HTML Dataset)": {
+		"scope": "javascript",
+		"prefix": "getdataset",
+		"body": [
+			"get $1() {",
+			"\treturn this.dataset.$1;",
+			"}",
+			"",
+			"set $1(newValue) {",
+			"\tthis.dataset.$1 = newValue;",
+			"}"
+		],
+		"description": "Getter / Setter for HTML dataset"
+	}
+}

@@ -1,22 +1,17 @@
 import Layer from 'ol/layer/Layer';
 import Source from 'ol/source/Source';
 import { toLonLat } from 'ol/proj';
+import { OLMapElement } from './ol-map-element.js';
 
-customElements.define('ol-mapbox-style', class extends HTMLElement {
-  constructor() {
-    super();
-  }
-
-  connectedCallback() {
-    this.map = (this.closest('ol-map') ? this.closest('ol-map') : null);
-
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZ2djaXR5IiwiYSI6ImNqNXpjM3czcjA4djIzMm4wOWQ0YjExMzcifQ.PeDOEiLNe7AkmhSa9ZK3aQ';
+customElements.define('ol-mapbox-style', class extends OLMapElement {
+  connectedCallback() {    
+    mapboxgl.accessToken = this.accessToken;
     let mbMap = new mapboxgl.Map({
-      style: 'mapbox://styles/ggcity/ckfo8an0k02ay19p10zg06oat',
+      style: this.src,
       attributionControl: false,
       boxZoom: false,
       center: [0,0],
-      container: this.map,
+      container: this.olMap.mapDiv,
       doubleClickZoom: false,
       dragPan: false,
       dragRotate: false,
@@ -27,19 +22,19 @@ customElements.define('ol-mapbox-style', class extends HTMLElement {
       touchZoomRotate: false,
     });
 
-    var mbLayer = new Layer({
+    let mbLayer = new Layer({
       render: function (frameState) {
-        var canvas = mbMap.getCanvas();
-        var viewState = frameState.viewState;
+        let canvas = mbMap.getCanvas();
+        let viewState = frameState.viewState;
 
-        var visible = mbLayer.getVisible();
+        let visible = mbLayer.getVisible();
         canvas.style.display = visible ? 'block' : 'none';
 
-        var opacity = mbLayer.getOpacity();
+        let opacity = mbLayer.getOpacity();
         canvas.style.opacity = opacity;
 
         // adjust view parameters in mapbox
-        var rotation = viewState.rotation;
+        let rotation = viewState.rotation;
         mbMap.jumpTo({
           center: toLonLat(viewState.center),
           zoom: viewState.zoom - 1,
@@ -60,45 +55,19 @@ customElements.define('ol-mapbox-style', class extends HTMLElement {
       },
       source: new Source({
         attributions: [
-          '<a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>',
-          'City of Garden Grove',
+          '<a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>'
         ],
       }),
     });
 
-    this.map.map.addLayer(mbLayer);
-}
-
-  static get observedAttributes() {
-    return [
-      'latitude', 'longitude', 'zoom', 'min-zoom', 'max-zoom'
-    ];
+    this.olMap.map.addLayer(mbLayer);
   }
 
-  attributeChangedCallback(attrName, oldVal, newVal) {
+  get src() {
+    return this.getAttribute('src');
   }
 
-  get latitude() {
-    return this.getAttribute('latitude');
-  }
-
-  set latitude(newValue) {
-    this.setAttribute('latitude', newValue);
-  }
-
-  get longitude() {
-    return this.getAttribute('longitude');
-  }
-
-  set longitude(newValue) {
-    this.setAttribute('longitude', newValue);
-  }
-
-  get zoom() {
-    return this.getAttribute('zoom');
-  }
-
-  set zoom(newValue) {
-    this.setAttribute('zoom', newValue);
+  get accessToken() {
+    return this.getAttribute('access-token');
   }
 });

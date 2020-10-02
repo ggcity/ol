@@ -106,4 +106,8 @@ customElements.define('ol-map', class extends HTMLElement {
   get projection() {
     return this.getAttribute('projection') || 'EPSG:3857';
   }
+
+  get mapDiv() {
+    return this.shadowRoot.querySelector('#map');
+  }
 });

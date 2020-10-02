@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ol-map demo</title>
     <style>
       html, body, ol-map {
@@ -24,12 +25,25 @@
       max-zoom="22"
       attribution-prefix="City of Garden Grove"
     >
-      <ol-mapbox-style></ol-mapbox-style>
-      <ol-vector-tile 
+      <ol-mapbox-style 
+        src="mapbox://styles/ggcity/ckfo8an0k02ay19p10zg06oat"
+        access-token="pk.eyJ1IjoiZ2djaXR5IiwiYSI6ImNqNXpjM3czcjA4djIzMm4wOWQ0YjExMzcifQ.PeDOEiLNe7AkmhSa9ZK3aQ"
+      ></ol-mapbox-style>
+      
+      <!-- <ol-vector-wmts
+        src="https://ggcity.org/geoserver/gwc/service/wmts"
+        layer="gis:parcels"
+        projection="EPSG:3857"
+        min-zoom="16"
+      ></ol-vector-wmts> -->
+
+      <ol-vector-xyz
+        src="https://ggcity.org/geoserver/gwc/service/tms/1.0.0/gis:parcels@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf" 
         min-zoom="16"
       >
-      </ol-vector-tile>
+      </ol-vector-xyz>
     </ol-map>
+
     <script src="./index.js"></script>
   </body>
 </html>
